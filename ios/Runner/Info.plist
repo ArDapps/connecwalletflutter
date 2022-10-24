@@ -14,6 +14,10 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>connecwalletflutter</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+    <string>Allow access your photo library</string>
+    <key>NSCameraUsageDescription</key>
+    <string>Allow access your phone's camera</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
