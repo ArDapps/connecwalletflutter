@@ -39,6 +39,13 @@ dependencies:
   walletconnect_dart: ^0.0.11
   url_launcher: ^6.1.6
   image_picker: ^0.8.6
+  file_picker: ^5.2.2
+  ipfs_rpc: ^0.0.1
+  path_provider: ^2.0.11
+  http: ^0.13.5
+  dio: ^4.0.6
+  algorand_dart:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
