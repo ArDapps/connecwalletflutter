@@ -1,3 +1,4 @@
+import 'package:connecwalletflutter/ConnectWallets.dart';
 import 'package:connecwalletflutter/HomePage.dart';
 import 'package:connecwalletflutter/PlaygroundScreen.dart';
 import 'package:connecwalletflutter/walletHomePage.dart';
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
 
         primarySwatch: Colors.blue,
       ),
-      home: const HomePage(),
+      home: const WalletHomePage(),
     );
   }
 }

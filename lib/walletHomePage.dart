@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:walletconnect_dart/walletconnect_dart.dart';
 import 'package:algorand_dart/algorand_dart.dart';
+import 'package:web3dart/web3dart.dart';
 
 class WalletHomePage extends StatefulWidget {
   const WalletHomePage({Key? key}) : super(key: key);
@@ -13,15 +14,6 @@ class WalletHomePage extends StatefulWidget {
 class _WalletHomePage extends State<WalletHomePage> {
   // Create an Algorand instance
 
-  Algorand _buildAlgorand() {
-    final algodClient = AlgodClient(
-      apiUrl: AlgoExplorer.MAINNET_ALGOD_API_URL,
-    );
-    final indexerClient = IndexerClient(
-      apiUrl: AlgoExplorer.MAINNET_ALGOD_API_URL,
-    );
-    return Algorand(algodClient: algodClient, indexerClient: indexerClient);
-  }
 
   // Create a connector
   final connector = WalletConnect(
@@ -48,8 +40,8 @@ class _WalletHomePage extends State<WalletHomePage> {
         setState(() {
           _session=session;
         });
-
         print(session);
+
       }catch(eroor){
         print("error at connect $eroor" );
       }
@@ -57,12 +49,18 @@ class _WalletHomePage extends State<WalletHomePage> {
 
   }
 
+  EthereumAddress getEthereumAddress() {
+    final String publicAddress = _session.account[0];
+    print(EthereumAddress.fromHex(publicAddress));
+    return EthereumAddress.fromHex(publicAddress);
+  }
 
   @override
   Widget build(BuildContext context) {
     // Subscribe to events
     connector.on('connect', (session) =>setState( () {
       _session=session;
+      print(session);
     }));
     connector.on('session_update', (payload) =>   setState(() {
       _session=session;
@@ -75,6 +73,15 @@ class _WalletHomePage extends State<WalletHomePage> {
     var chainId= session?.chainId;
 
 
+ getSender() {
+   if(account!=null){
+     // final sender = Address.fromAlgorandAddress(address: _session.accounts[0]);
+     final sender = EthereumAddress.fromHex(session.accounts[0]);
+
+     print("Sender is ${sender.toString()}");
+
+   }
+ }
 
 
 
@@ -87,7 +94,7 @@ class _WalletHomePage extends State<WalletHomePage> {
               padding: const EdgeInsets.all(20.0),
               child: Text("Please Clikc Button to Connect with Metamask Wallet Application"),
             ),
-            TextButton(onPressed: ()=>connectMetmaskWallet(context), child: Text("Connect Wallet"))
+            TextButton(onPressed: ()=>connectMetmaskWallet(context), child: Text("Connect Wallet")),
 
           ],
         ),
@@ -95,6 +102,7 @@ class _WalletHomePage extends State<WalletHomePage> {
         children: [
           Text("You are Connected  $account"),
           Text("Chain Id is   $chainId"),
+          TextButton(onPressed: ()=>getSender(), child: Text("Print Sender Wallet"))
 
 
         ],
